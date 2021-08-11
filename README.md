@@ -1,5 +1,3 @@
-# HyperParameter-Optimization
-
 ## **🔶 목차**
 
 1. **예측모델 관리 및 성능 고도화**
@@ -9,7 +7,7 @@
 - 튜닝 내용
 - 결론
 
-2. **링크**
+1. **링크**
 - [깃허브 링크](https://github.com/daje0601/AB_Test_-_Cohort_analytic)
 - 그 외 포트폴리오
 
@@ -34,7 +32,7 @@
 
 **분석 목적 : 하이퍼파라미터 튜닝을 통한 성능 극대화** 
 
-**선정 사유 : 마켓컬리 입사 후 예측모델 관리 및 성능 고도화 업무가 중요하다 생각하였습니다. 
+**선정 사유 : 입사 후 예측모델 관리 및 성능 고도화 업무가 중요하다 생각하였습니다. 
                   이에, 하이퍼파라미터 튜닝을 보여드리고자 별도의 페이지로 구성하였습니다.** 
 
 ( 그 외 데이터를 꼼꼼하게 살피는 프로젝트는 상단에 포트폴리오 링크를 참조 부탁 드립니다. )
@@ -59,15 +57,14 @@
 - 이러한 문제점을 해결하기 위한 그래프가 kdeplot입니다.
 - 여기서 각각의 feature마다 그래프가 그려지며, 2봉, 3봉으로 출력이 되는 그래프는 카테고리형으로 추정할 수 있습니다.
 
-2. **target 데이터 분석** 
+1. **target 데이터 분석** 
 
-![image](https://user-images.githubusercontent.com/73736988/128789041-34b142b5-14d1-46ce-b1aa-5566e9a8ebc9.png)
-
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/68ea1a94-c7e8-4d03-96ae-a6a5ab6a0861/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/68ea1a94-c7e8-4d03-96ae-a6a5ab6a0861/Untitled.png)
 
 - 데이터의 Positive skew(왼쪽으로 치우진 모양)을 보이고 있습니다.
 - target 데이터도 kdeplot과 코드로 살펴보겠습니다.
 
-![image](https://user-images.githubusercontent.com/73736988/128789073-8b632ca3-276c-4399-ab76-124ee05f3649.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/847932f2-a86c-4492-a4ac-ddef59f07b5a/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/847932f2-a86c-4492-a4ac-ddef59f07b5a/Untitled.png)
 
 ```jsx
 # 5달러의 loss를 발생시킨 인원을 확인하기 위한 코드 
@@ -142,7 +139,7 @@ train.loss[train["loss"] <= 5].sum() / train["loss"].sum() # 13%
 
     여기서 활용되는 optuna를 선택한 이유는 아래 그림에서 와 같이 optuna가 우수한 성능을 보였기 때문에 최적의 하이퍼파라미터를 찾는데 적절하다고 생각하였습니다. 
 
-    ![image](https://user-images.githubusercontent.com/73736988/128789088-e266343a-9366-4fa9-8a27-18f6ebfc8d8c.png)
+    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f201e5e4-1c46-485b-b13d-92d43ad626dc/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f201e5e4-1c46-485b-b13d-92d43ad626dc/Untitled.png)
 
     - 이미지 reference 출처 :
 
@@ -168,18 +165,19 @@ train.loss[train["loss"] <= 5].sum() / train["loss"].sum() # 13%
 
 ### 3. 시각화
 
-![image](https://user-images.githubusercontent.com/73736988/128789103-c58673c5-8afd-45ce-b523-959bd69cb5c0.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/44742754-bc98-44ed-8cd5-484680bdb10f/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/44742754-bc98-44ed-8cd5-484680bdb10f/Untitled.png)
+
 1) optuna를 시각화하여 각각의 파라미터간의 관계를 살펴보았습니다. 역시 예상했던 것처럼 과적합을 방지하는 gamma, alpha 파라미터가 일정한 루트를 보였습니다.
 
 2) 또한, 가장 큰 영향을 파라미터는 n_estimators와 max_depth 였으며, 
 
-![image](https://user-images.githubusercontent.com/73736988/128789109-e2b5dc03-8abe-47f7-8af7-25102b1fe850.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5644756f-7d59-4400-b0a2-fa868b5d6167/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5644756f-7d59-4400-b0a2-fa868b5d6167/Untitled.png)
 
 3) eli5를 활용하여 가장 큰 영향을 준 feature를 확인결과, f52, f81으로 확인되었습니다. 
 
-![image](https://user-images.githubusercontent.com/73736988/128789117-6faa5549-2d72-4779-9ad6-9426d6ee3147.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/522558d9-20db-4e5e-84ea-b745ad12a5f1/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/522558d9-20db-4e5e-84ea-b745ad12a5f1/Untitled.png)
 
-![image](https://user-images.githubusercontent.com/73736988/128789130-f97f31f0-8de7-4132-86f3-52f49f5f42ff.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2e476e2c-d9c8-46b2-acbd-cd54f0cb2966/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2e476e2c-d9c8-46b2-acbd-cd54f0cb2966/Untitled.png)
 
 eli5가 정확하게 측정하지 못하였을 수도 있으니, shap 라이브러리를 활용하여 재확인토록 하겠습니다. 역시, f52가 찐한 빨간색을 띄우며, 우측으로 도드라져 있습니다.(빨간색은 성능을 향상시킨 요인을 표기하는 것이며, 파란색은 성능을 하락시킨 요인을 표기하는 것 입니다.)
 
@@ -191,4 +189,4 @@ eli5가 정확하게 측정하지 못하였을 수도 있으니, shap 라이브�
 
 ### 5. 결론
 
-마켓컬리에 입사하여 위와 같은 라이브러리를 활용하여 예측모델 성능 고도화 업무를 차질 없이 임하도록 하겠습니다. 감사합니다.
+입사하여 위와 같은 라이브러리를 활용하여 예측모델 성능 고도화 업무를 차질 없이 임하도록 하겠습니다. 감사합니다.
