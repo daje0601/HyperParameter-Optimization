@@ -13,7 +13,7 @@
 
 ## 🔶시나리오
 
----
+
 
 > 강다솔 지원자는 데이터 사이언티스트로 입사를 하게 되었습니다. 
 팀장님께서 기존 수요 예측 모델의 성능을 개선하라는 첫 업무를 주셨습니다. 
@@ -23,7 +23,7 @@
 
 ## 🔶 데이터 안내
 
----
+
 
 해당 데이터는 현재 kaggle에서 competition이 진행되고 있는 데이터입니다.
 실제 대출 채무 불이행과 관련된 손실 계산 데이터로써, feature name은 f1, f2 등의 형식으로 암호화 되어 있으며, feature의 수는 f0~f99까지 100개의 featur로 구성되어 있습니다. 해당 competition은 구글에서 하이퍼파라미터 튜닝 실력을 검증하기 위한 목적으로 진행하고 있습니다. 
@@ -39,7 +39,7 @@
 
 ## 🔶 분석 내용
 
----
+
 
 1. **전처리** 
 - 데이터 타입, 결측치, 고유값 수를 확인한 결과, 해당 데이터는 카테코리형 데이터가 모두 숫자형 데이터로 치환이 되어 있습니다. 이에, 그래프를 통해 어떤 feature 카테코리형인지 확인해보도록 하겠습니다.
@@ -59,12 +59,13 @@
 
 1. **target 데이터 분석** 
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/68ea1a94-c7e8-4d03-96ae-a6a5ab6a0861/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/68ea1a94-c7e8-4d03-96ae-a6a5ab6a0861/Untitled.png)
+![image](https://user-images.githubusercontent.com/73736988/129168151-2b12f7d1-c292-421c-a459-a9af8f19159f.png)
 
 - 데이터의 Positive skew(왼쪽으로 치우진 모양)을 보이고 있습니다.
 - target 데이터도 kdeplot과 코드로 살펴보겠습니다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/847932f2-a86c-4492-a4ac-ddef59f07b5a/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/847932f2-a86c-4492-a4ac-ddef59f07b5a/Untitled.png)
+![image](https://user-images.githubusercontent.com/73736988/129168167-95c77452-79de-4876-84f4-11cd83c2ecf5.png)
+
 
 ```jsx
 # 5달러의 loss를 발생시킨 인원을 확인하기 위한 코드 
@@ -80,7 +81,7 @@ train.loss[train["loss"] <= 5].sum() / train["loss"].sum() # 13%
 
 ## 🔶모델링
 
----
+
 
 ### 1. **Base Model**
 
@@ -139,8 +140,9 @@ train.loss[train["loss"] <= 5].sum() / train["loss"].sum() # 13%
 
     여기서 활용되는 optuna를 선택한 이유는 아래 그림에서 와 같이 optuna가 우수한 성능을 보였기 때문에 최적의 하이퍼파라미터를 찾는데 적절하다고 생각하였습니다. 
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f201e5e4-1c46-485b-b13d-92d43ad626dc/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f201e5e4-1c46-485b-b13d-92d43ad626dc/Untitled.png)
+![image](https://user-images.githubusercontent.com/73736988/129168215-2dc40ccf-30e0-466a-afb7-2111c02284d7.png)
 
+  
     - 이미지 reference 출처 :
 
         (1) Hutter, F., Hoos, H., Leyton-Brown, K .: 하이퍼 파라미터 중요성 평가를위한 효율적인 접근 방식. 에서 : Xing and Jebara [157], 754–762 (2014)
@@ -165,19 +167,18 @@ train.loss[train["loss"] <= 5].sum() / train["loss"].sum() # 13%
 
 ### 3. 시각화
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/44742754-bc98-44ed-8cd5-484680bdb10f/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/44742754-bc98-44ed-8cd5-484680bdb10f/Untitled.png)
+![image](https://user-images.githubusercontent.com/73736988/129168234-f6f30ced-84aa-4ed5-ae24-d861aada7c67.png)
 
 1) optuna를 시각화하여 각각의 파라미터간의 관계를 살펴보았습니다. 역시 예상했던 것처럼 과적합을 방지하는 gamma, alpha 파라미터가 일정한 루트를 보였습니다.
 
 2) 또한, 가장 큰 영향을 파라미터는 n_estimators와 max_depth 였으며, 
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5644756f-7d59-4400-b0a2-fa868b5d6167/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5644756f-7d59-4400-b0a2-fa868b5d6167/Untitled.png)
+![image](https://user-images.githubusercontent.com/73736988/129168247-a56404ff-5673-498f-a8d7-f33d4be995ef.png)
 
 3) eli5를 활용하여 가장 큰 영향을 준 feature를 확인결과, f52, f81으로 확인되었습니다. 
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/522558d9-20db-4e5e-84ea-b745ad12a5f1/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/522558d9-20db-4e5e-84ea-b745ad12a5f1/Untitled.png)
+![image](https://user-images.githubusercontent.com/73736988/129168259-ed23ec3c-5134-475d-92a3-a879ee9df0a1.png)
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2e476e2c-d9c8-46b2-acbd-cd54f0cb2966/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2e476e2c-d9c8-46b2-acbd-cd54f0cb2966/Untitled.png)
+![image](https://user-images.githubusercontent.com/73736988/129168271-0aa38b9a-b4cc-4854-a658-78bf68da3e03.png)  
 
 eli5가 정확하게 측정하지 못하였을 수도 있으니, shap 라이브러리를 활용하여 재확인토록 하겠습니다. 역시, f52가 찐한 빨간색을 띄우며, 우측으로 도드라져 있습니다.(빨간색은 성능을 향상시킨 요인을 표기하는 것이며, 파란색은 성능을 하락시킨 요인을 표기하는 것 입니다.)
 
